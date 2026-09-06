@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#000000">
+  <title>Reviews - CutzBySmith</title>
+  <link rel="stylesheet" href="/style.css">
+</head>
+<body class="booking-body">
+  <header class="nav">
+    <a class="brand" href="/">DemoBooking<span>.</span></a>
+    <a class="home-link" href="/" aria-label="Home" title="Home">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m3 10 9-7 9 7v10a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1Z"></path></svg>
+    </a>
+    <nav id="site-menu" class="nav-actions">
+      <a class="nav-link" href="/booking.html">Book an Appointment</a>
+      <a class="nav-link" href="/socials.html">Socials</a>
+      <a class="nav-link" href="/review.html">Reviews</a>
+    </nav>
+    <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="site-menu" aria-label="Open navigation menu">
+      <span></span><span></span><span></span>
+    </button>
+  </header>
+
+  <main class="booking-page review-page">
+    <div class="booking-header">
+      <div class="eyebrow">YOUR EXPERIENCE MATTERS</div>
+      <h1>Leave a Review</h1>
+      <p>Tell us about your experience.</p>
+    </div>
+
+    <section class="customer-reviews" aria-labelledby="customerReviewsHeading">
+      <div class="eyebrow">CLIENT EXPERIENCES</div>
+      <h2 id="customerReviewsHeading">Customer Reviews</h2>
+      <div id="customerReviewsList" class="reviews-list" aria-live="polite">
+        <p class="reviews-empty">Loading reviews...</p>
+      </div>
+    </section>
+
+    <form id="reviewForm" class="booking-card review-card">
+      <section class="form-section">
+        <div class="section-title"><span>01</span><div><h2>Your name</h2><p>Let us know who you are.</p></div></div>
+        <label for="reviewName">Name
+          <input id="reviewName" name="name" type="text" maxlength="100" placeholder="e.g. Malik Smith" required>
+        </label>
+      </section>
+
+      <section class="form-section">
+        <div class="section-title"><span>02</span><div><h2>Your experience</h2><p>Share what you thought about your service.</p></div></div>
+        <label for="experience">Let us know about your experience
+          <textarea id="experience" name="experience" maxlength="2000" placeholder="Tell us about your fresh cut..." required></textarea>
+        </label>
+        <fieldset class="rating-fieldset">
+          <legend>Rate your Experience</legend>
+          <div class="rating-input" role="radiogroup" aria-label="Rate your experience from 1 to 5 stars">
+            <input id="rating-1" name="rating" type="radio" value="1" required>
+            <label for="rating-1" title="1 star">★</label>
+            <input id="rating-2" name="rating" type="radio" value="2">
+            <label for="rating-2" title="2 stars">★</label>
+            <input id="rating-3" name="rating" type="radio" value="3">
+            <label for="rating-3" title="3 stars">★</label>
+            <input id="rating-4" name="rating" type="radio" value="4">
+            <label for="rating-4" title="4 stars">★</label>
+            <input id="rating-5" name="rating" type="radio" value="5">
+            <label for="rating-5" title="5 stars">★</label>
+          </div>
+        </fieldset>
+      </section>
+
+      <button id="reviewSubmit" class="button primary submit" type="submit">Submit Review <span>→</span></button>
+      <div id="reviewStatus" class="status" role="status"></div>
+    </form>
+
+  </main>
+
+  <footer>
+    <span>© 2026 CutzBySmith. Built for clean cuts and quality service.</span>
+    <div class="social-icons" aria-label="Social media">
+      <a class="social-icon" href="https://www.instagram.com/cutzbysmith_/" target="_blank" rel="noopener noreferrer" title="Instagram" aria-label="Instagram">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"></rect><circle cx="12" cy="12" r="4"></circle><circle cx="17.5" cy="6.5" r="1"></circle></svg>
+      </a>
+      <a class="social-icon" href="https://wa.me/18687500574" target="_blank" rel="noopener noreferrer" title="Chat on WhatsApp" aria-label="Chat on WhatsApp">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 11.5a8 8 0 0 1-11.8 7L4 20l1.5-4A8 8 0 1 1 20 11.5Z"></path><path d="M9 8.5c.2-.4.5-.4.8-.1l1 1.5c.2.3.1.6-.1.8l-.5.4c.5 1 1.3 1.8 2.3 2.3l.4-.5c.2-.2.5-.3.8-.1l1.5 1c.3.2.3.6-.1.8-1 .6-2.1.5-3.2-.1a8 8 0 0 1-3.4-3.4c-.6-1.1-.7-2.2-.1-3.2Z"></path></svg>
+      </a>
+      <a class="social-icon" href="https://www.tiktok.com/@cutzbysmith?_t=8otfIMnJHKn&_r=1&fbclid=PAcGRvZgJleHRuA2FlbQIxMQBzcnRjBmFwcF9pZA85MzY2MTk3NDMzOTI0NTkAAad-sD5vRRTJ_PRxNQLHI_iLn07ZW28nxCExOtQ2ZV_Uo0iGLP8_O0h-O_08qA_aem_t6TD4MDD94Ys0AKi9hAHtg" target="_blank" rel="noopener noreferrer" title="TikTok" aria-label="TikTok">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15.5 3c.3 1.8 1.4 3.1 3.2 3.6v3.1c-1.3-.1-2.4-.5-3.4-1.1v5.8a5.6 5.6 0 1 1-4.8-5.5v3.2a2.4 2.4 0 1 0 1.7 2.3V3h3.3Z"></path></svg>
+      </a>
+    </div>
+  </footer>
+
+<script>
+const reviewForm = document.getElementById("reviewForm");
+const reviewStatus = document.getElementById("reviewStatus");
+const reviewSubmit = document.getElementById("reviewSubmit");
+const ratingInputs = document.querySelectorAll('input[name="rating"]');
+const customerReviewsList = document.getElementById("customerReviewsList");
+const ratingLabels = document.querySelectorAll(".rating-input label");
+
+function updateRatingStars(value) {
+  ratingLabels.forEach((label, index) => {
+    label.classList.toggle("selected", index < value);
+  });
+}
+
+ratingInputs.forEach(input => {
+  input.addEventListener("change", () => {
+    updateRatingStars(Number(input.value));
+  });
+});
+
+ratingLabels.forEach((label, index) => {
+  label.addEventListener("mouseenter", () => updateRatingStars(index + 1));
+});
+
+document.querySelector(".rating-input").addEventListener("mouseleave", () => {
+  const selectedRating = document.querySelector('input[name="rating"]:checked');
+  updateRatingStars(selectedRating ? Number(selectedRating.value) : 0);
+});
+
+reviewForm.addEventListener("submit", async (event) => {
+  event.preventDefault();
+  reviewStatus.className = "status";
+  reviewStatus.textContent = "";
+  reviewSubmit.disabled = true;
+  reviewSubmit.textContent = "Submitting...";
+
+  try {
+    const response = await fetch("/api/reviews", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        name: document.getElementById("reviewName").value,
+        experience: document.getElementById("experience").value,
+        rating: document.querySelector('input[name="rating"]:checked')?.value
+      })
+    });
+    const responseText = await response.text();
+    let data;
+    try {
+      data = JSON.parse(responseText);
+    } catch {
+      throw new Error("The review service is unavailable. Please try again later.");
+    }
+
+    if (!response.ok) throw new Error(data.error || "Review submission failed.");
+    window.location.href = "/thank-you.html";
+  } catch (error) {
+    reviewStatus.className = "status error";
+    reviewStatus.textContent = error.message;
+    reviewSubmit.disabled = false;
+    reviewSubmit.innerHTML = "Submit Review <span>→</span>";
+  }
+});
+
+async function loadCustomerReviews() {
+  try {
+    const response = await fetch("/api/reviews");
+    const reviews = await response.json();
+    customerReviewsList.innerHTML = "";
+
+    if (!reviews.length) {
+      customerReviewsList.innerHTML = '<p class="reviews-empty">No reviews yet. Be the first to share your experience.</p>';
+      return;
+    }
+
+    reviews.forEach(review => {
+      const reviewCard = document.createElement("article");
+      reviewCard.className = "review-item";
+      const rating = document.createElement("div");
+      rating.className = "review-rating";
+      rating.setAttribute("aria-label", `${review.rating} out of 5 stars`);
+
+      for (let star = 1; star <= 5; star += 1) {
+        const starElement = document.createElement("span");
+        starElement.textContent = star <= review.rating ? "★" : "☆";
+        rating.appendChild(starElement);
+      }
+
+      const quote = document.createElement("p");
+      quote.textContent = `“${review.experience}”`;
+      const name = document.createElement("strong");
+      name.textContent = review.name;
+      reviewCard.append(rating, quote, name);
+      customerReviewsList.appendChild(reviewCard);
+    });
+  } catch (error) {
+    customerReviewsList.innerHTML = '<p class="reviews-empty">Reviews are temporarily unavailable.</p>';
+  }
+}
+
+loadCustomerReviews();
+</script>
+<script src="/nav.js"></script>
+</body>
+</html>
