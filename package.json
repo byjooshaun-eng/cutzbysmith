@@ -1,0 +1,17 @@
+{
+  "name": "sleek-booking-website",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Modern appointment booking website with server-side availability protection.",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node server.js"
+  },
+  "dependencies": {
+    "better-sqlite3": "^11.7.0",
+    "dotenv": "^17.4.2",
+    "express": "^4.21.2",
+    "nodemailer": "^9.1.1"
+  }
+}
