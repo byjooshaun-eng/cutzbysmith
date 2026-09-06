@@ -18,7 +18,10 @@ function createMailer() {
 
   return nodemailer.createTransport({
     service: process.env.SMTP_SERVICE || "gmail",
-    auth: { user, pass }
+    auth: { user, pass },
+    connectionTimeout: 10000,
+    greetingTimeout: 10000,
+    socketTimeout: 15000
   });
 }
 
@@ -277,33 +280,27 @@ app.post("/api/bookings", async (req, res) => {
 
     const result = insert.run(name, phone, email, address, service, addOns.join(","), date, time);
 
-    let emailSent = false;
-    let emailErrorMessage = null;
-    try {
-      emailSent = await sendBookingNotification({
-        id: result.lastInsertRowid,
-        name,
-        phone,
-        email,
-        service: SERVICES[service] || "",
-        servicePrice: SERVICE_PRICES[service] || 0,
-        addOns: addOns.map(addOn => ADD_ONS[addOn]).join(", ") || "None",
-        addOnPrices: addOns.map(addOn => `+TT$${ADD_ON_PRICES[addOn]}`).join(", "),
-        address,
-        date,
-        time
-      });
-    } catch (emailError) {
-      emailErrorMessage = emailError.message;
-      console.error("Booking saved, but notification email failed:", emailErrorMessage);
-    }
-
     res.status(201).json({
       success: true,
       bookingId: result.lastInsertRowid,
-      emailSent,
-      emailError: emailErrorMessage,
+      emailQueued: true,
       message: "Your appointment has been booked successfully."
+    });
+
+    sendBookingNotification({
+      id: result.lastInsertRowid,
+      name,
+      phone,
+      email,
+      service: SERVICES[service] || "",
+      servicePrice: SERVICE_PRICES[service] || 0,
+      addOns: addOns.map(addOn => ADD_ONS[addOn]).join(", ") || "None",
+      addOnPrices: addOns.map(addOn => `+TT$${ADD_ON_PRICES[addOn]}`).join(", "),
+      address,
+      date,
+      time
+    }).catch(emailError => {
+      console.error("Booking saved, but notification email failed:", emailError.message);
     });
   } catch (err) {
     if (String(err.message).includes("UNIQUE")) {
