@@ -2,7 +2,6 @@ require("dotenv").config();
 
 const express = require("express");
 const Database = require("better-sqlite3");
-const nodemailer = require("nodemailer");
 const path = require("path");
 
 const app = express();
@@ -10,29 +9,11 @@ const PORT = process.env.PORT || 3000;
 const NOTIFICATION_EMAIL = "sxrgebusiness@gmail.com";
 const db = new Database(process.env.DB_PATH || path.join(__dirname, "bookings.db"));
 
-function createMailer() {
-  const user = String(process.env.SMTP_USER || "").trim().replace(/^['"]|['"]$/g, "");
-  const pass = String(process.env.SMTP_PASS || "").replace(/\s+/g, "").replace(/^['"]|['"]$/g, "");
-
-  if (!user || !pass) return null;
-
-  return nodemailer.createTransport({
-    host: process.env.SMTP_HOST || "smtp.gmail.com",
-    port: Number(process.env.SMTP_PORT || 587),
-    secure: String(process.env.SMTP_SECURE || "false").toLowerCase() === "true",
-    family: 4,
-    auth: { user, pass },
-    connectionTimeout: 10000,
-    greetingTimeout: 10000,
-    socketTimeout: 15000
-  });
-}
-
 async function sendBookingNotification(booking) {
-  const mailer = createMailer();
-  if (!mailer) {
-    throw new Error("SMTP_USER and SMTP_PASS are not configured in the server process.");
-  }
+  // Resend configuration: set these values in Render, never in this file.
+  const apiKey = String(process.env.RESEND_API_KEY || "").trim();
+  const from = String(process.env.RESEND_FROM || "onboarding@resend.dev").trim();
+  if (!apiKey) throw new Error("RESEND_API_KEY is not configured in the server process.");
 
   const details = [
     ["Booking reference", `BK-${booking.id}`],
@@ -77,32 +58,29 @@ async function sendBookingNotification(booking) {
       </body>
     </html>`;
 
-  await mailer.verify();
-  await mailer.sendMail({
-    from: process.env.SMTP_FROM || process.env.SMTP_USER.trim(),
-    to: booking.email,
-    subject: "Your appointment is confirmed | CutzBySmith",
-    html: emailHtml("Appointment confirmed", `You're booked, ${booking.name}.`),
-    text: [
-      "Your appointment has been confirmed.",
-      "",
-      `Booking reference: BK-${booking.id}`,
-      `Full Name: ${booking.name}`,
-      `Contact Number: ${booking.phone}`,
-      `Email: ${booking.email}`,
-      `Main service: ${booking.service || "Not specified"}${booking.servicePrice ? ` (TT$${booking.servicePrice})` : ""}`,
-      `Additional services: ${booking.addOns || "None"}${booking.addOnPrices ? ` (${booking.addOnPrices})` : ""}`,
-      `Appointment Date: ${booking.date}`,
-      `Appointment Time: ${booking.time}`
-    ].join("\n")
-  });
-
-  await mailer.sendMail({
-    from: process.env.SMTP_FROM || process.env.SMTP_USER.trim(),
-    to: NOTIFICATION_EMAIL,
-    subject: `New appointment booked: ${booking.name}`,
-    html: emailHtml("New appointment", `${booking.name} has booked an appointment.`),
-    text: [
+  const messages = [
+    {
+      to: [booking.email],
+      subject: "Your appointment is confirmed | CutzBySmith",
+      html: emailHtml("Appointment confirmed", `You're booked, ${booking.name}.`),
+      text: [
+        "Your appointment has been confirmed.",
+        "",
+        `Booking reference: BK-${booking.id}`,
+        `Full Name: ${booking.name}`,
+        `Contact Number: ${booking.phone}`,
+        `Email: ${booking.email}`,
+        `Main service: ${booking.service || "Not specified"}${booking.servicePrice ? ` (TT$${booking.servicePrice})` : ""}`,
+        `Additional services: ${booking.addOns || "None"}${booking.addOnPrices ? ` (${booking.addOnPrices})` : ""}`,
+        `Appointment Date: ${booking.date}`,
+        `Appointment Time: ${booking.time}`
+      ].join("\n")
+    },
+    {
+      to: [NOTIFICATION_EMAIL],
+      subject: `New appointment booked: ${booking.name}`,
+      html: emailHtml("New appointment", `${booking.name} has booked an appointment.`),
+      text: [
       "A new appointment has just been made.",
       "",
       `Booking reference: BK-${booking.id}`,
@@ -114,8 +92,24 @@ async function sendBookingNotification(booking) {
       `Address: ${booking.address || "Not provided"}`,
       `Appointment Date: ${booking.date}`,
       `Appointment Time: ${booking.time}`
-    ].join("\n")
-  });
+      ].join("\n")
+    }
+  ];
+
+  for (const message of messages) {
+    const response = await fetch("https://api.resend.com/emails", {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${apiKey}`,
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({ from, ...message })
+    });
+    if (!response.ok) {
+      const errorBody = await response.text();
+      throw new Error(`Resend ${response.status}: ${errorBody}`);
+    }
+  }
 
   return true;
 }
@@ -368,3 +362,4 @@ app.get("*", (req, res) => {
 app.listen(PORT, () => {
   console.log(`Booking website running at http://localhost:${PORT}`);
 });
+
