@@ -11,13 +11,16 @@ const NOTIFICATION_EMAIL = "sxrgebusiness@gmail.com";
 const db = new Database(process.env.DB_PATH || path.join(__dirname, "bookings.db"));
 
 function createMailer() {
-  const user = String(process.env.SMTP_USER || "").trim();
-  const pass = String(process.env.SMTP_PASS || "").replace(/\s+/g, "");
+  const user = String(process.env.SMTP_USER || "").trim().replace(/^['"]|['"]$/g, "");
+  const pass = String(process.env.SMTP_PASS || "").replace(/\s+/g, "").replace(/^['"]|['"]$/g, "");
 
   if (!user || !pass) return null;
 
   return nodemailer.createTransport({
-    service: process.env.SMTP_SERVICE || "gmail",
+    host: process.env.SMTP_HOST || "smtp.gmail.com",
+    port: Number(process.env.SMTP_PORT || 465),
+    secure: String(process.env.SMTP_SECURE || "true").toLowerCase() === "true",
+    family: 4,
     auth: { user, pass },
     connectionTimeout: 10000,
     greetingTimeout: 10000,
@@ -115,6 +118,12 @@ async function sendBookingNotification(booking) {
   });
 
   return true;
+}
+
+function getEmailFailureDetails(error) {
+  return [error.code, error.responseCode, error.response, error.message]
+    .filter(Boolean)
+    .join(" | ");
 }
 
 app.use(express.json());
@@ -300,7 +309,7 @@ app.post("/api/bookings", async (req, res) => {
       date,
       time
     }).catch(emailError => {
-      console.error("Booking saved, but notification email failed:", emailError.message);
+      console.error("Booking saved, but notification email failed:", getEmailFailureDetails(emailError));
     });
   } catch (err) {
     if (String(err.message).includes("UNIQUE")) {
