@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#000000">
+  <title>Book Your Appointment — CutzBySmith</title>
+  <link rel="stylesheet" href="/style.css">
+</head>
+<body class="booking-body">
+  <header class="nav">
+    <a class="brand" href="/">DemoBooking<span>.</span></a>
+    <a class="home-link" href="/" aria-label="Home" title="Home">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m3 10 9-7 9 7v10a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1Z"></path></svg>
+    </a>
+    <nav id="site-menu" class="nav-actions">
+      <a class="nav-link" href="/booking.html">Book an Appointment</a>
+      <a class="nav-link" href="/socials.html">Socials</a>
+      <a class="nav-link" href="/review.html">Reviews</a>
+    </nav>
+    <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="site-menu" aria-label="Open navigation menu">
+      <span></span><span></span><span></span>
+    </button>
+  </header>
+
+  <main class="booking-page">
+    <div class="booking-header">
+      <div class="eyebrow">BOOKING</div>
+      <h1>Book Your Appointment</h1>
+      <p>Choose a date and time for your fresh cut.</p>
+    </div>
+
+    <form id="bookingForm" class="booking-card">
+      <section class="form-section">
+        <div class="section-title"><span>01</span><div><h2>Your details</h2><p>Tell us who the appointment is for.</p></div></div>
+        <div class="grid two">
+          <label>Full Name
+            <input id="name" name="name" type="text" maxlength="100" placeholder="e.g. Malik Smith" required>
+          </label>
+          <label>Contact Number
+            <input id="phone" name="phone" type="tel" maxlength="30" placeholder="e.g. 868-555-1234" required>
+          </label>
+        </div>
+        <label>Email Address
+          <input id="email" name="email" type="email" maxlength="254" placeholder="e.g. malik@example.com" autocomplete="email" required>
+        </label>
+        <label>Address <em>(Optional)</em>
+          <input id="address" name="address" type="text" maxlength="250" placeholder="Your address">
+        </label>
+      </section>
+
+      <section class="form-section booking-service-section">
+        <div class="section-title"><span>02</span><div><h2>Choose a service</h2><p>Select a main service and any optional extras.</p></div></div>
+        <fieldset class="service-group">
+          <legend>Main service</legend>
+          <label class="service-option">
+            <input type="radio" name="service" value="haircut" required>
+            <span><strong>Haircut</strong><small>Clean cut and quality finish</small></span>
+            <b>TT$100</b>
+          </label>
+          <label class="service-option">
+            <input type="radio" name="service" value="big-chop">
+            <span><strong>Big Chop</strong><small>A fresh start with a bold finish</small></span>
+            <b>TT$140</b>
+          </label>
+        </fieldset>
+        <fieldset class="service-group">
+          <legend>Additional services <em>(Optional)</em></legend>
+          <label class="service-option">
+            <input type="checkbox" name="addon" value="beard-mustache">
+            <span><strong>Beard &amp; Mustache</strong><small>Add-on to your main service</small></span>
+            <b>+TT$20</b>
+          </label>
+          <label class="service-option">
+            <input type="checkbox" name="addon" value="trim-down">
+            <span><strong>Trim Down / Cut Down</strong><small>Add-on to your main service</small></span>
+            <b>+TT$20</b>
+          </label>
+        </fieldset>
+        <div id="serviceSummary" class="service-summary" hidden></div>
+      </section>
+
+      <section class="form-section">
+        <div class="section-title"><span>03</span><div><h2>Choose a date</h2><p>Sundays are closed. Past dates cannot be selected.</p></div></div>
+        <label>Appointment Date
+          <input id="date" name="date" type="date" required>
+        </label>
+        <div id="dateMessage" class="hint">Choose a date to see available times.</div>
+      </section>
+
+      <section class="form-section">
+        <div class="section-title"><span>04</span><div><h2>Choose a time</h2><p>Select your desired time</p></div></div>
+        <div id="slots" class="slots"></div>
+        <input id="time" name="time" type="hidden" required>
+      </section>
+
+      <button id="submitBtn" class="button primary submit" type="submit">Confirm Booking <span>→</span></button>
+      <div id="status" class="status" role="status"></div>
+    </form>
+  </main>
+
+  <footer>
+    <span>© 2026 CutzBySmith. Secure server-side appointment protection.</span>
+    <div class="social-icons" aria-label="Social media">
+      <a class="social-icon" href="https://www.instagram.com/cutzbysmith_/" target="_blank" rel="noopener noreferrer" title="Instagram" aria-label="Instagram">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"></rect><circle cx="12" cy="12" r="4"></circle><circle cx="17.5" cy="6.5" r="1"></circle></svg>
+      </a>
+      <a class="social-icon" href="https://wa.me/18687500574" target="_blank" rel="noopener noreferrer" title="Chat on WhatsApp" aria-label="Chat on WhatsApp">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 11.5a8 8 0 0 1-11.8 7L4 20l1.5-4A8 8 0 1 1 20 11.5Z"></path><path d="M9 8.5c.2-.4.5-.4.8-.1l1 1.5c.2.3.1.6-.1.8l-.5.4c.5 1 1.3 1.8 2.3 2.3l.4-.5c.2-.2.5-.3.8-.1l1.5 1c.3.2.3.6-.1.8-1 .6-2.1.5-3.2-.1a8 8 0 0 1-3.4-3.4c-.6-1.1-.7-2.2-.1-3.2Z"></path></svg>
+      </a>
+      <a class="social-icon" href="https://www.tiktok.com/@cutzbysmith?_t=8otfIMnJHKn&_r=1&fbclid=PAcGRvZgJleHRuA2FlbQIxMQBzcnRjBmFwcF9pZA85MzY2MTk3NDMzOTI0NTkAAad-sD5vRRTJ_PRxNQLHI_iLn07ZW28nxCExOtQ2ZV_Uo0iGLP8_O0h-O_08qA_aem_t6TD4MDD94Ys0AKi9hAHtg" target="_blank" rel="noopener noreferrer" title="TikTok" aria-label="TikTok">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15.5 3c.3 1.8 1.4 3.1 3.2 3.6v3.1c-1.3-.1-2.4-.5-3.4-1.1v5.8a5.6 5.6 0 1 1-4.8-5.5v3.2a2.4 2.4 0 1 0 1.7 2.3V3h3.3Z"></path></svg>
+      </a>
+    </div>
+  </footer>
+
+<script>
+const dateInput = document.getElementById("date");
+const slotsEl = document.getElementById("slots");
+const timeInput = document.getElementById("time");
+const messageEl = document.getElementById("dateMessage");
+const form = document.getElementById("bookingForm");
+const statusEl = document.getElementById("status");
+const submitBtn = document.getElementById("submitBtn");
+const serviceSummary = document.getElementById("serviceSummary");
+const serviceNames = { haircut: "Haircut", "big-chop": "Big Chop" };
+const addOnNames = { "beard-mustache": "Beard & Mustache", "trim-down": "Trim Down / Cut Down" };
+const servicePrices = { haircut: 100, "big-chop": 140 };
+const addOnPrices = { "beard-mustache": 20, "trim-down": 20 };
+let selectedServiceKey = "";
+let selectedAddOns = [];
+
+function renderServiceSummary() {
+  if (!selectedServiceKey) {
+    serviceSummary.hidden = true;
+    serviceSummary.innerHTML = "";
+    return;
+  }
+
+  const mainPrice = servicePrices[selectedServiceKey];
+  const addOnTotal = selectedAddOns.reduce((total, addOn) => total + addOnPrices[addOn], 0);
+  const total = mainPrice + addOnTotal;
+  serviceSummary.hidden = false;
+  serviceSummary.innerHTML = `
+    <div class="service-summary-row">
+      <span class="service-check" aria-hidden="true">✓</span>
+      <strong>${serviceNames[selectedServiceKey]}</strong>
+      <b>TT$${mainPrice}</b>
+    </div>
+    ${selectedAddOns.map(addOn => `
+      <div class="service-summary-row service-summary-addon">
+        <span class="service-check" aria-hidden="true">✓</span>
+        <span>${addOnNames[addOn]}</span>
+        <b>+TT$${addOnPrices[addOn]}</b>
+      </div>`).join("")}
+    <div class="service-summary-total"><span>Total</span><strong>TT$${total}</strong></div>`;
+}
+
+document.querySelectorAll('input[name="service"]').forEach(input => {
+  let wasChecked = false;
+  const serviceOption = input.closest("label");
+
+  serviceOption.addEventListener("pointerdown", () => {
+    wasChecked = input.checked;
+  });
+
+  serviceOption.addEventListener("click", event => {
+    if (wasChecked) {
+      event.preventDefault();
+      input.checked = false;
+      selectedServiceKey = "";
+      renderServiceSummary();
+    } else {
+      selectedServiceKey = input.value;
+      renderServiceSummary();
+    }
+    wasChecked = false;
+  });
+});
+
+document.querySelectorAll('input[name="addon"]').forEach(input => {
+  input.addEventListener("change", () => {
+    selectedAddOns = [...document.querySelectorAll('input[name="addon"]:checked')].map(addOn => addOn.value);
+    renderServiceSummary();
+  });
+});
+
+const today = new Date();
+const yyyy = today.getFullYear();
+const mm = String(today.getMonth() + 1).padStart(2, "0");
+const dd = String(today.getDate()).padStart(2, "0");
+dateInput.min = `${yyyy}-${mm}-${dd}`;
+
+dateInput.addEventListener("change", loadAvailability);
+
+const requestedDate = new URLSearchParams(window.location.search).get("date");
+if (requestedDate && /^\d{4}-\d{2}-\d{2}$/.test(requestedDate)) {
+  dateInput.value = requestedDate;
+  loadAvailability();
+}
+
+async function loadAvailability() {
+  timeInput.value = "";
+  slotsEl.innerHTML = "";
+  statusEl.className = "status";
+  statusEl.textContent = "";
+
+  if (!dateInput.value) return;
+
+  const selectedDate = new Date(`${dateInput.value}T00:00:00`);
+  if (selectedDate.getDay() === 0) {
+    messageEl.textContent = "We're closed on Sundays. Please choose another date.";
+    return;
+  }
+
+  messageEl.textContent = "Checking availability…";
+
+  try {
+    const response = await fetch(`/api/availability?date=${encodeURIComponent(dateInput.value)}`);
+    const data = await response.json();
+
+    if (!response.ok) throw new Error(data.error || "Unable to load availability.");
+
+    if (data.closed) {
+      messageEl.textContent = "We're closed on this day. Please choose another date.";
+      return;
+    }
+
+    const availableCount = data.slots.filter(s => s.available).length;
+    messageEl.textContent = availableCount
+      ? `${availableCount} time slot${availableCount === 1 ? "" : "s"} available.`
+      : "No times are available on this date.";
+
+    data.slots.forEach(slot => {
+      const button = document.createElement("button");
+      button.type = "button";
+      button.className = "slot";
+      button.textContent = formatTime(slot.time);
+      button.disabled = !slot.available;
+
+      if (!slot.available) button.classList.add("unavailable");
+
+      button.addEventListener("click", () => {
+        document.querySelectorAll(".slot").forEach(s => s.classList.remove("selected"));
+        button.classList.add("selected");
+        timeInput.value = slot.time;
+      });
+
+      slotsEl.appendChild(button);
+    });
+  } catch (error) {
+    messageEl.textContent = error.message;
+  }
+}
+
+function formatTime(time) {
+  const [hour, minute] = time.split(":").map(Number);
+  const suffix = hour >= 12 ? "PM" : "AM";
+  const displayHour = hour % 12 || 12;
+  return `${displayHour}:${String(minute).padStart(2, "0")} ${suffix}`;
+}
+
+form.addEventListener("submit", async (event) => {
+  event.preventDefault();
+  statusEl.className = "status";
+  statusEl.textContent = "";
+
+  if (!timeInput.value) {
+    statusEl.className = "status error";
+    statusEl.textContent = "Please choose an available time.";
+    return;
+  }
+
+  submitBtn.disabled = true;
+  submitBtn.textContent = "Confirming…";
+
+  const payload = {
+    name: document.getElementById("name").value,
+    phone: document.getElementById("phone").value,
+    email: document.getElementById("email").value,
+    address: document.getElementById("address").value,
+    service: selectedServiceKey,
+    addOns: selectedAddOns,
+    date: dateInput.value,
+    time: timeInput.value
+  };
+
+  try {
+    const response = await fetch("/api/bookings", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(payload)
+    });
+
+    const data = await response.json();
+
+    if (!response.ok) {
+      statusEl.className = "status error";
+      statusEl.textContent = data.error || "Booking failed.";
+      if (response.status === 409) await loadAvailability();
+      return;
+    }
+
+    statusEl.className = "status success";
+    const emailNotice = data.emailQueued
+      ? "<br>Email notification queued."
+      : "";
+    statusEl.innerHTML = `<strong>You're booked! 🎉</strong><br>${escapeHtml(data.message)}<br>Reference: BK-${data.bookingId}${emailNotice}`;
+    form.reset();
+    timeInput.value = "";
+    slotsEl.innerHTML = "";
+    messageEl.textContent = "Your appointment is confirmed.";
+  } catch (error) {
+    statusEl.className = "status error";
+    statusEl.textContent = "Could not connect to the booking server.";
+  } finally {
+    submitBtn.disabled = false;
+    submitBtn.innerHTML = "Confirm Booking <span>→</span>";
+  }
+});
+
+function escapeHtml(value) {
+  return value.replace(/[&<>"']/g, c => ({
+    "&":"&amp;", "<":"&lt;", ">":"&gt;", '"':"&quot;", "'":"&#039;"
+  }[c]));
+}
+</script>
+<script src="/nav.js"></script>
+</body>
+</html>
