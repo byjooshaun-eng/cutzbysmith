@@ -18,8 +18,8 @@ function createMailer() {
 
   return nodemailer.createTransport({
     host: process.env.SMTP_HOST || "smtp.gmail.com",
-    port: Number(process.env.SMTP_PORT || 465),
-    secure: String(process.env.SMTP_SECURE || "true").toLowerCase() === "true",
+    port: Number(process.env.SMTP_PORT || 587),
+    secure: String(process.env.SMTP_SECURE || "false").toLowerCase() === "true",
     family: 4,
     auth: { user, pass },
     connectionTimeout: 10000,
